@@ -1,0 +1,151 @@
+/* Updated Review Page CSS */
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin: 20px 0;
+}
+
+.review-form {
+  max-width: 700px; /* Increase width */
+  margin: 20px auto;
+  padding: 30px; /* Increase padding for a spacious layout */
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.review-form input,
+.review-form textarea {
+  width: 100%;
+  padding: 15px; /* Adjust padding for better proportions */
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px; /* Increase font size */
+}
+
+.review-form textarea {
+  height: 200px; /* Increase height for more content */
+  resize: none;
+}
+
+.rating-stars {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.star-filled {
+  color: #ffd700; /* Gold color for filled stars */
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.star-empty {
+  color: #ddd;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.star-empty:hover,
+.star-filled:hover {
+  color: #ffd700; /* Orange color on hover */
+}
+
+.submit-btn {
+  display: block;
+  width: 60%; /* Increase button width */
+  padding: 12px; /* Adjust padding for larger button */
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px; /* Larger font size */
+  cursor: pointer;
+  text-align: center;
+  margin: 0 auto; /* Center the button */
+}
+
+.submit-btn:hover {
+  background: #0056b3;
+}
+
+.reviews-list {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-list h2 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.review-item {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.review-item:last-child {
+  border-bottom: none;
+}
+
+.review-item h3 {
+  margin: 0 0 5px;
+  color: #007bff;
+}
+
+.review-item p {
+  margin: 5px 0;
+  color: #555;
+}
+
+/* Parent Container */
+.review-page-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1470px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Left Section */
+.review-form-container {
+  flex: 1;
+  padding-right: 20px;
+  border-right: 5px solid #ddd;
+}
+
+/* Right Section */
+.reviews-list-container {
+  flex: 1;
+  padding-left: 20px;
+}
+
+/* Ensure dynamic height adjustment */
+.review-page-container > .review-form-container,
+.review-page-container > .reviews-list-container {
+  align-self: stretch; /* Ensures both sections stretch to match the tallest content */
+}

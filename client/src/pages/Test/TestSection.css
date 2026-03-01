@@ -1,0 +1,220 @@
+/* Test Section Container */
+.error-state {
+  text-align: center;
+  padding: 2rem;
+  background: #ffe6e6;
+  border-radius: 8px;
+  margin: 2rem;
+}
+
+.error-state p {
+  color: #dc3545;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.error-state button {
+  background: #dc3545;
+  color: white;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.error-state button:hover {
+  opacity: 0.9;
+}
+
+
+
+
+.test-section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Header Container */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Test Title */
+  .test-section h2 {
+    font-size: 28px;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  /* Submit Button at the Top */
+  .submit-button-top {
+    padding: 10px 18px;
+    font-size: 12px;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button-top:hover {
+    background-color: #218838;
+  }
+  
+  /* Timer */
+  .timer {
+    font-size: 20px;
+    color: #e74c3c;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
+  }
+  
+  /* Progress Indicator */
+  .progress-indicator {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
+  }
+  
+  /* Question Container */
+  .question-container {
+    margin-bottom: 30px;
+  }
+  
+  .question-container h3 {
+    font-size: 22px;
+    color: #444;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  
+  /* Options List */
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  ul li {
+    margin-bottom: 15px;
+  }
+  
+  /* Option Buttons */
+  ul li label {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  ul li label:hover {
+    border-color: #007bff;
+    background-color: #f9f9f9;
+  }
+  
+  ul li input[type="radio"] {
+    margin-right: 12px;
+    cursor: pointer;
+  }
+  
+  .option-text {
+    flex: 1;
+  }
+  
+  /* Next Question Button */
+  .next-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .next-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Result Container */
+.result-container {
+    width: 80%; /* Increased width */
+    max-width: 800px; /* Set a maximum width */
+    margin: 0 auto; /* Center the container */
+    padding: 40px; /* Increased padding */
+    text-align: center;
+}
+
+.result-container h2 {
+    font-size: 32px; /* Increased font size */
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.result-container p {
+    font-size: 24px; /* Increased font size */
+    color: #555;
+    margin-bottom: 15px;
+}
+  /* Restart Button */
+  .restart-button {
+    display: block;
+    margin: 20px auto 0;
+    padding: 12px 24px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .restart-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Loading State */
+  .loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+  }
+  
+  .spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #007bff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }

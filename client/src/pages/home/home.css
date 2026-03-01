@@ -1,0 +1,79 @@
+.home {
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  padding: 80px 20px; /* Adjust padding for smaller screens */
+  text-align: center;
+  animation: backgroundMove 8s ease infinite;
+}
+
+@keyframes backgroundMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.home-content {
+  max-width: 800px;
+  margin: 0 auto;
+  opacity: 0;
+  animation: fadeIn 2s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+button {
+  padding: 12px 24px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.1);
+  background-color: #6b46c1;
+}
+
+/* Media Queries for Mobile Screens */
+@media (max-width: 768px) {
+  .home {
+    padding: 60px 15px; /* Reduce padding further for smaller screens */
+  }
+
+  .home-content h1 {
+    font-size: 28px; /* Smaller font size for the heading */
+  }
+
+  .home-content p {
+    font-size: 16px; /* Adjust paragraph font size */
+  }
+
+  button {
+    padding: 10px 20px; /* Slightly smaller button */
+  }
+}
+
+@media (max-width: 480px) {
+  .home {
+    padding: 50px 10px; /* Further reduce padding for very small screens */
+  }
+
+  .home-content h1 {
+    font-size: 24px; /* Adjust font size for very small screens */
+  }
+
+  .home-content p {
+    font-size: 14px; /* Smaller paragraph font */
+  }
+
+  button {
+    padding: 8px 16px; /* Compact button for smaller screens */
+    font-size: 14px; /* Adjust button font size */
+  }
+}

@@ -1,0 +1,40 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.dashboard-admin {
+  display: flex;
+  min-height: 100vh; /* Ensures full-page height */
+}
+
+.sidebar {
+  width: 200px;
+  height: 100vh; /* Full height */
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-right: 1px solid gray;
+  background-color: #333;
+  color: white;
+}
+
+.content {
+  flex: 1;
+  margin-left: 200px; /* Avoid overlapping with the sidebar */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1; /* Pushes footer down */
+}
+
+footer {
+  background-color: #8a5baf;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+}

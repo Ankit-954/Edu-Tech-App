@@ -1,0 +1,136 @@
+/* Container for the roadmap page */
+.roadmap-page {
+  padding: 20px 40px; /* Add balanced padding */
+  width: 100%; /* Ensure full width */
+  max-width: 1200px; /* Limit the content width for better readability */
+  margin: 0 auto; /* Center the content */
+  font-family: 'Arial', sans-serif; /* Use a clean font */
+  color: #333; /* Neutral text color for readability */
+  line-height: 1.6; /* Increase line spacing */
+}
+
+/* Title styling */
+.roadmap-title {
+  text-align: center;
+  font-size: 28px;
+  color: #4A148C; /* Purple shade for the main title */
+  margin-bottom: 20px;
+  text-transform: uppercase; /* Title case for emphasis */
+  border-bottom: 2px solid #ddd; /* Underline for separation */
+  padding-bottom: 10px;
+}
+
+/* Section styling for each stage */
+.roadmap-stage {
+  margin-bottom: 40px; /* Add space between sections */
+  padding: 20px;
+  border: 1px solid #ddd; /* Subtle border for separation */
+  border-radius: 10px; /* Rounded corners for smooth design */
+  background-color: #f9f9f9; /* Light background for cards */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+}
+
+/* Heading for each stage */
+.roadmap-stage h3 {
+  color: #512DA8; /* Darker purple for stage headings */
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+/* Lists for skills, tools, and projects */
+.roadmap-stage ul {
+  padding-left: 20px; /* Indent lists */
+  margin-bottom: 20px;
+  list-style-type: disc; /* Disc-style bullets */
+}
+
+.roadmap-stage ul li {
+  margin-bottom: 8px; /* Space between list items */
+  font-size: 16px;
+  color: #444; /* Slightly darker text for items */
+}
+
+/* Description section */
+.roadmap-stage p {
+  font-size: 16px;
+  color: #666; /* Muted color for descriptions */
+}
+
+/* Tools and Projects headings */
+.roadmap-stage h4 {
+  color: #7B1FA2; /* Highlighted purple for subheadings */
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+/* Error message styling */
+.error-message {
+  text-align: center;
+  color: red;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+/* Search bar styling */
+.search-bar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  width: 300px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  outline: none;
+  transition: box-shadow 0.3s;
+}
+
+.search-bar input:focus {
+  box-shadow: 0 0 8px rgba(81, 45, 168, 0.5); /* Purple glow on focus */
+}
+
+.search-bar button {
+  background-color: #512DA8;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-left: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.search-bar button:hover {
+  background-color: #7B1FA2; /* Slightly lighter shade on hover */
+}
+
+.social-links a {
+  font-size: 20px;
+  margin: 0 10px;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.social-links a:hover {
+  color: #512DA8;
+}
+
+/* In your roadmap.css or a separate CSS file */
+.download-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  background-color: #45a049;
+}
+
