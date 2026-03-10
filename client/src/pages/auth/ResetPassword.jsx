@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { server } from "../../main";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [btnLoading, setBtnLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const params = useParams();
 
@@ -37,12 +39,22 @@ const ResetPassword = () => {
         <h2>Reset Password</h2>
         <form onSubmit={handleSubmit}>
           <label htmlFor="text">Enter Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <div className="password-input-wrapper">
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button
+              type="button"
+              className="password-toggle-btn"
+              onClick={() => setShowPassword((prev) => !prev)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? <FiEyeOff /> : <FiEye />}
+            </button>
+          </div>
           <button disabled={btnLoading} className="common-btn">
             {btnLoading ? "Please Wait..." : "Reset Password"}
           </button>

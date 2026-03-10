@@ -2,108 +2,216 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  gap: 14px;
+  padding: 14px 24px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.86);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
+  box-sizing: border-box;
+  overflow-x: clip;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
 }
 
-/* Logo Styles */
 .logo {
   display: flex;
   align-items: center;
-  font-size: 35px;
-  font-weight: 600;
-  color: #8a4baf;
-  margin-right: 20px;
-  transition: transform 0.3s, background-color 0.3s;
+  flex: 0 0 auto;
+  margin-right: 10px;
+  transition: transform 0.22s ease;
 }
 
 .logo:hover {
-  transform: scale(1.1);
-  background-color: #6b46c1;
-  border-radius: 5px;
+  transform: translateY(-1px);
 }
 
 .logo img {
-  height: 50px;
+  height: 56px;
   width: auto;
-  margin-right: 10px;
 }
 
 .logo a {
   text-decoration: none;
-  color: inherit;
 }
 
-/* Search Box Styles */
 .search-box {
   display: flex;
   align-items: center;
-  border: 2px solid black;
-  border-radius: 25px;
-  padding: 5px 10px;
-  margin: 0 15px;
-  max-width: 600px;
-  flex-grow: 1;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin: 0 12px;
+  max-width: 520px;
+  flex: 0 1 380px;
   position: relative;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  background: #fff;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease;
 }
 
 .search-box input {
   width: 100%;
-  padding: 7px 25px 7px 0;
+  padding: 6px 6px 6px 0;
   border: none;
   outline: none;
-  font-size: 16px;
+  font-size: 0.92rem;
+  background: transparent;
+  color: var(--text);
 }
 
 .search-icon {
-  color: #8a4baf;
-  font-size: 18px;
+  color: var(--primary);
+  font-size: 1rem;
   margin-right: 10px;
 }
 
 .search-box:hover {
-  border-color: #8a4baf;
-  box-shadow: 0 2px 5px rgba(138, 75, 175, 0.2);
+  border-color: #98b6f4;
 }
 
-/* Navigation Links Styles */
+.search-box:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.16);
+}
+
+.search-suggestions {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #d7e1f2;
+  border-radius: 12px;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.14);
+  overflow: hidden;
+  z-index: 35;
+}
+
+.search-suggestion-item {
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: #ffffff;
+  color: #1f2937;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.search-suggestion-item span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-suggestion-meta {
+  font-size: 0.74rem;
+  color: #64748b;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  padding: 2px 8px;
+  flex-shrink: 0;
+}
+
+.search-suggestion-loading {
+  padding: 8px 12px;
+  color: #2563eb;
+  font-size: 0.78rem;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fbff;
+}
+
+.search-suggestion-item:hover,
+.search-suggestion-item.active {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
 .link {
   display: flex;
-  gap: 0.5rem;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 4px;
 }
 
 .link a {
   text-decoration: none;
-  color: #333;
-  transition: color 0.3s, background-color 0.3s, transform 0.3s;
-  padding: 5px 10px;
-  border-radius: 5px;
+  color: #20304d;
+  font-weight: 600;
+  transition: color 0.2s ease, background-color 0.2s ease,
+    transform 0.2s ease;
+  padding: 8px 12px;
+  border-radius: 9px;
 }
 
 .link a:hover {
-  color: #8a4baf;
-  background-color: rgba(138, 75, 175, 0.1);
-  transform: scale(1.05);
+  color: var(--primary-dark);
+  background: rgba(37, 99, 235, 0.1);
+  transform: translateY(-1px);
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-  .logo {
-    font-size: 18px;
-  }
+.link a.active {
+  color: #ffffff;
+  background: linear-gradient(120deg, var(--primary), var(--accent));
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.25);
+}
 
-  .link {
-    gap: 0.5rem;
+.menu-toggle-btn {
+  border: 1px solid rgba(37, 99, 235, 0.28);
+  background: linear-gradient(125deg, rgba(37, 99, 235, 0.1), rgba(14, 165, 233, 0.15));
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  color: #1f3a67;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 1.4rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.menu-toggle-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+}
+
+@media (max-width: 1024px) {
+  header {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 12px 14px;
   }
 
   .search-box {
-    max-width: 180px;
-    margin: 0 10px;
+    order: 3;
+    width: 100%;
+    max-width: none;
+    margin: 6px 0 2px;
   }
 
-  .search-box input {
-    width: 100%;
+  .link {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .logo img {
+    height: 44px;
+  }
+
+  .link a {
+    font-size: 0.92rem;
+    padding: 7px 9px;
   }
 }

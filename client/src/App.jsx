@@ -1,14 +1,13 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Header from "./components/header/Header";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Verify from "./pages/auth/Verify";
 import Footer from "./components/footer/Footer";
-import About from "./pages/about/About";
 import Account from "./pages/account/Account";
 import { UserData } from "./context/UserContext";
 import Loading from "./components/loading/Loading";
@@ -27,20 +26,71 @@ import RoadmapPage from "./components/header/RoadmapPage"; // Import the new com
 import ReviewPage from "./pages/review/ReviewPage"; // Import the ReviewPage component
 import TestDomain from "./pages/Test/TestDomain"; // Import the Test component
 import TestSection from "./pages/Test/TestSection";
+import { useEffect } from "react";
+import Progress from "./pages/progress/Progress";
+import UserSidebar from "./components/sidebar/UserSidebar";
+import InterviewPage from "./pages/interview/InterviewPage";
 
 const App = () => {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  );
+};
+
+const AppContent = () => {
   const { isAuth, user, loading } = UserData();
+  const location = useLocation();
+  const [isUserSidebarOpen, setIsUserSidebarOpen] = React.useState(false);
+  const isTestTakingPage =
+    location.pathname.startsWith("/test/") && location.pathname !== "/test";
+
+  useEffect(() => {
+    if (isTestTakingPage) {
+      document.body.classList.add("no-app-header");
+    } else {
+      document.body.classList.remove("no-app-header");
+    }
+
+    return () => {
+      document.body.classList.remove("no-app-header");
+    };
+  }, [isTestTakingPage]);
+
+  useEffect(() => {
+    setIsUserSidebarOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = isUserSidebarOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isUserSidebarOpen]);
 
   return (
     <>
       {loading ? (
         <Loading />
       ) : (
-        <BrowserRouter>
-          <Header isAuth={isAuth} />
+        <>
+          {!isTestTakingPage && (
+            <>
+              <Header
+                onToggleSidebar={() => setIsUserSidebarOpen((prev) => !prev)}
+              />
+              <UserSidebar
+                isOpen={isUserSidebarOpen}
+                onClose={() => setIsUserSidebarOpen(false)}
+                isAuth={isAuth}
+                user={user}
+              />
+            </>
+          )}
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/progress" element={isAuth ? <Progress user={user} /> : <Login />} />
             <Route path="/courses" element={<Courses />} />
             <Route
               path="/account"
@@ -82,39 +132,29 @@ const App = () => {
             />
             <Route
               path="/admin/dashboard"
-              element={isAuth ? <AdminDashbord user={user} /> : <Login />}
+              element={isAuth && user?.role === "admin" ? <AdminDashbord user={user} /> : <Navigate to="/" />}
             />
             <Route
               path="/admin/course"
-              element={isAuth ? <AdminCourses user={user} /> : <Login />}
+              element={isAuth && user?.role === "admin" ? <AdminCourses user={user} /> : <Navigate to="/" />}
             />
             <Route
               path="/admin/users"
-              element={isAuth ? <AdminUsers user={user} /> : <Login />}
+              element={isAuth && user?.role === "admin" ? <AdminUsers user={user} /> : <Navigate to="/" />}
             />
             <Route path="/roadmap/:roadmapName" element={<RoadmapPage />} />{" "}
             {/* Add the new route */}
             <Route path="/reviews" element={<ReviewPage />} /> {/* New route */}
+            <Route path="/interview" element={isAuth ? <InterviewPage /> : <Login />} />
             <Route path="/test" element={<TestDomain />} />{" "}
             {/* Test Domain Selection */}
             <Route
               path="/test/:domain"
-              element={isAuth ? <TestSection /> : <Login />} // Protect the test route
-            />
-            // In your router configuration
-            <Route
-              path="/test/:domainId"
-              element={
-                location.state?.domainName ? (
-                  <TestSection />
-                ) : (
-                  <Navigate to="/domains" />
-                )
-              }
+              element={isAuth ? <TestSection /> : <Login />}
             />
           </Routes>
-          <Footer />
-        </BrowserRouter>
+          {!isTestTakingPage && <Footer />}
+        </>
       )}
     </>
   );

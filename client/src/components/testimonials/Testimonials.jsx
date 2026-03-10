@@ -1,61 +1,74 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./testimonials.css";
+import { server } from "../../main";
 
 const Testimonials = () => {
-  const testimonialsData = [
-    {
-      id: 1,
-      name: "John Doe",
-      position: "Student",
-      message:
-        "This platform helped me learn so effectively. The courses are amazing and the instructors are top-notch.",
-      image:
-        "https://th.bing.com/th?q=Current+Bachelor&w=120&h=120&c=1&rs=1&qlt=90&cb=1&dpr=1.3&pid=InlineBlock&mkt=en-IN&cc=IN&setlang=en&adlt=moderate&t=1&mw=247",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      position: "Student",
-      message:
-        "I've learned more here than in any other place. The interactive lessons and quizzes make learning enjoyable.",
-      image:
-        "https://th.bing.com/th/id/OIP.GKAiW3oc2TWXVEeZAzrWOAHaJF?w=135&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
-    },
-    {
-      id: 3,
-      name: "John Doe",
-      position: "Student",
-      message:
-        "This platform helped me learn so effectively. The courses are amazing and the instructors are top-notch.",
-      image:
-        "https://th.bing.com/th?q=Current+Bachelor&w=120&h=120&c=1&rs=1&qlt=90&cb=1&dpr=1.3&pid=InlineBlock&mkt=en-IN&cc=IN&setlang=en&adlt=moderate&t=1&mw=247",
-    },
-    {
-      id: 4,
-      name: "Jane Smith",
-      position: "Student",
-      message:
-        "I've learned more here than in any other place. The interactive lessons and quizzes make learning enjoyable.",
-      image:
-        "https://th.bing.com/th/id/OIP.GKAiW3oc2TWXVEeZAzrWOAHaJF?w=135&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
-    },
-  ];
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    const fetchTopReviews = async () => {
+      try {
+        const response = await fetch(`${server}/api/reviews`);
+        const data = await response.json();
+        if (data.reviews) {
+          setReviews(data.reviews);
+        }
+      } catch (error) {
+        console.error("Failed to load testimonial reviews:", error);
+      }
+    };
+
+    fetchTopReviews();
+  }, []);
+
+  const topReviews = useMemo(() => {
+    const sortByQuality = (a, b) => {
+      const aHasImage = a.image ? 1 : 0;
+      const bHasImage = b.image ? 1 : 0;
+      if (bHasImage !== aHasImage) return bHasImage - aHasImage;
+      if (b.rating !== a.rating) return b.rating - a.rating;
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    };
+
+    const featured = reviews.filter((r) => r.isFeatured).sort(sortByQuality);
+    const nonFeatured = reviews.filter((r) => !r.isFeatured).sort(sortByQuality);
+
+    return [...featured, ...nonFeatured].slice(0, 4);
+  }, [reviews]);
+
+  const renderStars = (rating = 0) =>
+    "\u2605".repeat(rating) + "\u2606".repeat(5 - rating);
+
   return (
     <section className="testimonials">
       <h2>What our students say</h2>
       <div className="testmonials-cards">
-        {testimonialsData.map((e) => (
-          <div className="testimonial-card" key={e.id}>
-            <div className="student-image">
-              <img src={e.image} alt="" />
+        {topReviews.length > 0 ? (
+          topReviews.map((e) => (
+            <div className="testimonial-card" key={e._id}>
+              <div className="student-image">
+                <img
+                  src={
+                    e.image
+                      ? `${server}/${e.image}`
+                      : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                          e.name || "Student"
+                        )}&background=1d4ed8&color=fff`
+                  }
+                  alt={e.name || "Student"}
+                />
+              </div>
+              <p className="message">{e.comment || "Great learning experience."}</p>
+              <div className="info">
+                <p className="name">{e.name || "Student"}</p>
+                <p className="position">Student</p>
+                <p className="rating">{renderStars(e.rating)}</p>
+              </div>
             </div>
-            <p className="message">{e.message}</p>
-            <div className="info">
-              <p className="name">{e.name}</p>
-              <p className="position">{e.position}</p>
-            </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="testimonial-empty">No reviews available yet.</p>
+        )}
       </div>
     </section>
   );

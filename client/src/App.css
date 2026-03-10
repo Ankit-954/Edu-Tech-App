@@ -1,27 +1,99 @@
+:root {
+  --header-height: 92px;
+  --bg: #f5f8ff;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #55637b;
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --accent: #0ea5e9;
+  --border: #d7e1f2;
+  --shadow-lg: 0 20px 45px rgba(26, 44, 77, 0.16);
+  --shadow-md: 0 10px 24px rgba(26, 44, 77, 0.12);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
 body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  
-    font-family: Arial, sans-serif;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(59, 130, 246, 0.16), transparent 35%),
+    radial-gradient(circle at 84% 88%, rgba(20, 184, 166, 0.14), transparent 42%),
+    linear-gradient(150deg, #eef5ff 0%, var(--bg) 45%, #f0fdfa 100%);
+  color: var(--text);
+  font-family: "Manrope", "Segoe UI", "Trebuchet MS", sans-serif;
+  line-height: 1.5;
+  padding-top: var(--header-height);
+}
+
+body.no-app-header {
+  padding-top: 0;
+}
+
+a {
+  color: inherit;
+}
+
+.common-btn {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 26px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+}
+
+.common-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  filter: saturate(1.1);
+}
+
+.common-btn:active {
+  transform: translateY(0);
+}
+
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+img,
+video {
+  max-width: 100%;
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --header-height: 140px;
   }
-  
+}
+
+@media (max-width: 768px) {
+  :root {
+    --header-height: 150px;
+  }
+
   .common-btn {
-    background-color: #8a4baf;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
-  
-    &:hover {
-      background-color: #5f357e;
-    }
-  
-    @media (max-width: 768px) {
-      font-size: 16px;
-    }
+    padding: 10px 18px;
+    font-size: 0.95rem;
   }
+}

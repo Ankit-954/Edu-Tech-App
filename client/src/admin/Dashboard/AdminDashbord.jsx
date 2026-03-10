@@ -30,24 +30,29 @@ const AdminDashbord = ({ user }) => {
     fetchStats();
   }, []);
   return (
-    <div>
-      <Layout>
-        <div className="main-content">
-          <div className="box">
-            <p>Total Courses</p>
-            <p>{stats.totalCoures}</p>
+    <Layout>
+      <div className="admin-dashboard">
+        <div className="admin-dashboard-header">
+          <h1>Admin Overview</h1>
+          <p>Track platform growth and learning activity in one place.</p>
+        </div>
+
+        <div className="stats-grid">
+          <div className="stat-card">
+            <p className="stat-label">Total Courses</p>
+            <p className="stat-value">{stats.totalCoures || 0}</p>
           </div>
-          <div className="box">
-            <p>Total Lectures</p>
-            <p>{stats.totalLectures}</p>
+          <div className="stat-card">
+            <p className="stat-label">Total Lectures</p>
+            <p className="stat-value">{stats.totalLectures || 0}</p>
           </div>
-          <div className="box">
-            <p>Total Users</p>
-            <p>{stats.totalUsers}</p>
+          <div className="stat-card">
+            <p className="stat-label">Total Users</p>
+            <p className="stat-value">{stats.totalUsers || 0}</p>
           </div>
         </div>
-      </Layout>
-    </div>
+      </div>
+    </Layout>
   );
 };
 

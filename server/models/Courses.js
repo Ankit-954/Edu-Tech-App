@@ -12,7 +12,7 @@ const schema = new mongoose.Schema({
 
   image: {
     type: String,
-    required: true,
+    default: "",
   },
   price: {
     type: Number,
@@ -25,6 +25,26 @@ const schema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
+  },
+  stream: {
+    type: String,
+    default: "",
+  },
+  level: {
+    type: String,
+    default: "All Levels",
+  },
+  subjects: {
+    type: [String],
+    default: [],
+  },
+  isTopCourse: {
+    type: Boolean,
+    default: false,
+  },
+  topPriority: {
+    type: Number,
+    default: 0,
   },
   createdBy: {
     type: String,

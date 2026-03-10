@@ -6,7 +6,7 @@ const CourseContext = createContext();
 
 export const CourseContextProvider = ({ children }) => {
   const [courses, setCourses] = useState([]);
-  const [course, setCourse] = useState([]);
+  const [course, setCourse] = useState(null);
   const [mycourse, setMyCourse] = useState([]);
 
   async function fetchCourses() {
@@ -29,16 +29,26 @@ export const CourseContextProvider = ({ children }) => {
   }
 
   async function fetchMyCourse() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setMyCourse([]);
+      return;
+    }
+
     try {
       const { data } = await axios.get(`${server}/api/mycourse`, {
         headers: {
-          token: localStorage.getItem("token"),
+          token,
         },
       });
 
       setMyCourse(data.courses);
     } catch (error) {
-      console.log(error);
+      if (error?.response?.status === 401 || error?.response?.status === 403) {
+        setMyCourse([]);
+      } else {
+        console.log(error);
+      }
     }
   }
 

@@ -6,7 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState(null);
   const [isAuth, setIsAuth] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,7 @@ export const UserContextProvider = ({ children }) => {
     } catch (error) {
       setBtnLoading(false);
       setIsAuth(false);
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Something went wrong");
     }
   }
 
@@ -48,7 +48,7 @@ export const UserContextProvider = ({ children }) => {
       navigate("/verify");
     } catch (error) {
       setBtnLoading(false);
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Something went wrong");
     }
   }
 
@@ -66,16 +66,24 @@ export const UserContextProvider = ({ children }) => {
       localStorage.clear();
       setBtnLoading(false);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Something went wrong");
       setBtnLoading(false);
     }
   }
 
   async function fetchUser() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setIsAuth(false);
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+
     try {
       const { data } = await axios.get(`${server}/api/user/me`, {
         headers: {
-          token: localStorage.getItem("token"),
+          token,
         },
       });
 
@@ -83,7 +91,11 @@ export const UserContextProvider = ({ children }) => {
       setUser(data.user);
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      if (error?.response?.status === 401 || error?.response?.status === 403) {
+        localStorage.removeItem("token");
+      }
+      setIsAuth(false);
+      setUser(null);
       setLoading(false);
     }
   }

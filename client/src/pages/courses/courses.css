@@ -1,18 +1,105 @@
 .courses {
-  padding: 80px 0;
-  text-align: center;
-  min-height: 60vh;
+  min-height: 65vh;
+  padding: 20px clamp(14px, 2.8vw, 30px) 34px;
+}
 
-  h2 {
-    font-size: 32px;
-    color: #8a4baf;
-    margin-bottom: 30px;
+.courses-hero {
+  background: linear-gradient(140deg, #f8fbff 0%, #eef4ff 60%, #e8f7f4 100%);
+  border: 1px solid #dce5f4;
+  border-radius: 16px;
+  padding: 18px;
+  text-align: center;
+}
+
+.courses-hero h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  color: #0f172a;
+}
+
+.courses-hero p {
+  margin: 6px 0 14px;
+  color: #5b6b85;
+}
+
+.courses-search {
+  width: min(100%, 520px);
+  border: 1px solid #cfd8ea;
+  border-radius: 999px;
+  padding: 10px 14px;
+  outline: none;
+  background: #ffffff;
+}
+
+.courses-layout {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 16px;
+}
+
+.courses-filter {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #d7e3f2;
+  border-radius: 14px;
+  padding: 12px;
+  height: fit-content;
+  position: sticky;
+  top: calc(var(--header-height) + 12px);
+}
+
+.courses-filter-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.courses-filter-head h3 {
+  margin: 0;
+  color: #0f172a;
+}
+
+.courses-filter-head button {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.courses-filter label {
+  display: block;
+  margin: 10px 0 6px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.courses-filter select {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 9px 10px;
+  background: #fff;
+}
+
+.courses-result-bar {
+  margin: 4px 0 12px;
+  color: #334155;
+  font-weight: 600;
+}
+
+.course-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(14px, 2.2vw, 22px);
+}
+
+@media (max-width: 920px) {
+  .courses-layout {
+    grid-template-columns: 1fr;
   }
 
-  .course-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 30px;
+  .courses-filter {
+    position: static;
   }
 }

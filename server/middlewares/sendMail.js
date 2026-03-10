@@ -133,13 +133,106 @@ export const sendForgotMail = async (subject, data) => {
     <a href="${process.env.frontendurl}/reset-password/${data.token}" class="button">Reset Password</a>
     <p>If you did not request this, please ignore this email.</p>
     <div class="footer">
-      <p>Thank you,<br>Your Website Team</p>
-      <p><a href="https://yourwebsite.com">yourwebsite.com</a></p>
+      <p>Thank you,<br>Your EduTech Team</p>
+      <p><a href="${process.env.frontendurl}">${process.env.frontendurl}</a></p>
     </div>
   </div>
 </body>
 </html>
 `;
+
+  await transport.sendMail({
+    from: process.env.Gmail,
+    to: data.email,
+    subject,
+    html,
+  });
+};
+
+export const sendCallbackRequestMail = async (data) => {
+  const transport = createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    auth: {
+      user: process.env.Gmail,
+      pass: process.env.Password,
+    },
+  });
+
+  const adminEmail = process.env.ADMIN_EMAIL || process.env.Gmail;
+  const safeMessage = data.message || "No additional details";
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Call Back Request</title>
+</head>
+<body style="font-family: Arial, sans-serif; background:#f4f7fb; padding:20px;">
+  <div style="max-width:620px; margin:0 auto; background:white; border-radius:10px; padding:20px; border:1px solid #dbe7ff;">
+    <h2 style="margin-top:0; color:#1e3a8a;">New Call Back Request</h2>
+    <p><strong>Name:</strong> ${data.name}</p>
+    <p><strong>Email:</strong> ${data.email || "Not provided"}</p>
+    <p><strong>Phone:</strong> ${data.phone}</p>
+    <p><strong>Message:</strong> ${safeMessage}</p>
+    <p style="margin-top:20px; color:#6b7280;">Submitted from SmartLearn AI chatbot.</p>
+  </div>
+</body>
+</html>`;
+
+  await transport.sendMail({
+    from: process.env.Gmail,
+    to: adminEmail,
+    subject: "SmartLearn AI - Call Back Request",
+    html,
+  });
+};
+
+export const sendRoleUpdateMail = async (data) => {
+  const transport = createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    auth: {
+      user: process.env.Gmail,
+      pass: process.env.Password,
+    },
+  });
+
+  const role = String(data?.role || "user").toLowerCase();
+  const isAdmin = role === "admin";
+  const userName = data?.name || "Learner";
+
+  const subject = isAdmin
+    ? "Congratulations! You are now an Admin"
+    : "Your SmartLearn role has been updated";
+
+  const title = isAdmin ? "Congratulations, Admin Access Granted" : "Role Updated";
+  const subtitle = isAdmin
+    ? "You have been promoted to Admin on SmartLearn AI."
+    : "Your account role was updated by platform superadmin.";
+  const nextSteps = isAdmin
+    ? "<li>Log in again to refresh role permissions.</li><li>Access Admin panel to manage courses and users.</li>"
+    : "<li>If this change is unexpected, contact support.</li>";
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Role Update</title>
+</head>
+<body style="font-family: Arial, sans-serif; background:#f4f7fb; padding:20px;">
+  <div style="max-width:620px; margin:0 auto; background:white; border-radius:10px; padding:20px; border:1px solid #dbe7ff;">
+    <h2 style="margin-top:0; color:#1e3a8a;">${title}</h2>
+    <p>Hello ${userName},</p>
+    <p>${subtitle}</p>
+    <p><strong>New Role:</strong> ${role}</p>
+    <ul>${nextSteps}</ul>
+    <p style="margin-top:20px; color:#6b7280;">SmartLearn AI Team</p>
+  </div>
+</body>
+</html>`;
 
   await transport.sendMail({
     from: process.env.Gmail,

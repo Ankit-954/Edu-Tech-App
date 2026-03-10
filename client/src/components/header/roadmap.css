@@ -1,136 +1,190 @@
-/* Container for the roadmap page */
 .roadmap-page {
-  padding: 20px 40px; /* Add balanced padding */
-  width: 100%; /* Ensure full width */
-  max-width: 1200px; /* Limit the content width for better readability */
-  margin: 0 auto; /* Center the content */
-  font-family: 'Arial', sans-serif; /* Use a clean font */
-  color: #333; /* Neutral text color for readability */
-  line-height: 1.6; /* Increase line spacing */
+  padding: 20px clamp(12px, 3vw, 28px) 34px;
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
 }
 
-/* Title styling */
-.roadmap-title {
-  text-align: center;
-  font-size: 28px;
-  color: #4A148C; /* Purple shade for the main title */
-  margin-bottom: 20px;
-  text-transform: uppercase; /* Title case for emphasis */
-  border-bottom: 2px solid #ddd; /* Underline for separation */
-  padding-bottom: 10px;
+.roadmap-hero {
+  background: linear-gradient(140deg, #eff6ff 0%, #f8fbff 58%, #ecfeff 100%);
+  border: 1px solid #d7e3f2;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
 }
 
-/* Section styling for each stage */
-.roadmap-stage {
-  margin-bottom: 40px; /* Add space between sections */
-  padding: 20px;
-  border: 1px solid #ddd; /* Subtle border for separation */
-  border-radius: 10px; /* Rounded corners for smooth design */
-  background-color: #f9f9f9; /* Light background for cards */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+.roadmap-hero h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: clamp(1.35rem, 2.8vw, 2rem);
 }
 
-/* Heading for each stage */
-.roadmap-stage h3 {
-  color: #512DA8; /* Darker purple for stage headings */
-  font-size: 22px;
-  margin-bottom: 15px;
+.roadmap-hero p {
+  margin: 6px 0 0;
+  color: #52627c;
+  max-width: 960px;
 }
 
-/* Lists for skills, tools, and projects */
-.roadmap-stage ul {
-  padding-left: 20px; /* Indent lists */
-  margin-bottom: 20px;
-  list-style-type: disc; /* Disc-style bullets */
-}
-
-.roadmap-stage ul li {
-  margin-bottom: 8px; /* Space between list items */
-  font-size: 16px;
-  color: #444; /* Slightly darker text for items */
-}
-
-/* Description section */
-.roadmap-stage p {
-  font-size: 16px;
-  color: #666; /* Muted color for descriptions */
-}
-
-/* Tools and Projects headings */
-.roadmap-stage h4 {
-  color: #7B1FA2; /* Highlighted purple for subheadings */
-  margin-top: 20px;
-  font-size: 18px;
-}
-
-/* Error message styling */
-.error-message {
-  text-align: center;
-  color: red;
-  font-size: 18px;
-  margin-top: 20px;
-}
-
-/* Search bar styling */
-.search-bar {
+.roadmap-hero-meta {
+  margin-top: 12px;
   display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.search-bar input {
-  width: 300px;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 20px;
-  outline: none;
-  transition: box-shadow 0.3s;
+.roadmap-hero-meta span {
+  background: #dbeafe;
+  color: #1e3a8a;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-weight: 700;
 }
 
-.search-bar input:focus {
-  box-shadow: 0 0 8px rgba(81, 45, 168, 0.5); /* Purple glow on focus */
-}
-
-.search-bar button {
-  background-color: #512DA8;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  margin-left: 10px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
-}
-
-.search-bar button:hover {
-  background-color: #7B1FA2; /* Slightly lighter shade on hover */
-}
-
-.social-links a {
-  font-size: 20px;
-  margin: 0 10px;
-  color: #333;
-  transition: color 0.3s;
-}
-
-.social-links a:hover {
-  color: #512DA8;
-}
-
-/* In your roadmap.css or a separate CSS file */
 .download-btn {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #4CAF50;
-  color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
+  padding: 10px 14px;
   cursor: pointer;
+  color: #fff;
+  background: linear-gradient(130deg, #2563eb 0%, #0ea5e9 100%);
 }
 
-.download-btn:hover {
-  background-color: #45a049;
+.roadmap-loading,
+.roadmap-error {
+  margin-top: 16px;
+  text-align: center;
 }
 
+.roadmap-error {
+  color: #b91c1c;
+}
+
+.roadmap-content {
+  margin-top: 16px;
+  display: grid;
+  gap: 16px;
+}
+
+.roadmap-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.roadmap-kpi-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #d7e3f2;
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.roadmap-kpi-card span {
+  color: #64748b;
+  display: block;
+  font-size: 0.84rem;
+}
+
+.roadmap-kpi-card strong {
+  color: #0f172a;
+  font-size: 1.35rem;
+}
+
+.roadmap-section {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #d7e3f2;
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.roadmap-section h3 {
+  margin: 0 0 12px;
+  color: #0f172a;
+}
+
+.roadmap-phases {
+  display: grid;
+  gap: 12px;
+}
+
+.roadmap-phase-card {
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  padding: 12px;
+  background: #f8fbff;
+}
+
+.phase-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.phase-top h4 {
+  margin: 0;
+  color: #0f172a;
+}
+
+.phase-top span {
+  font-size: 0.82rem;
+  color: #1e3a8a;
+  background: #dbeafe;
+  border-radius: 999px;
+  padding: 5px 9px;
+  white-space: nowrap;
+}
+
+.phase-focus {
+  margin: 8px 0 2px;
+  color: #334155;
+  font-weight: 600;
+}
+
+.phase-block h5 {
+  margin: 10px 0 6px;
+  color: #334155;
+}
+
+.phase-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.phase-chip-list span {
+  border: 1px solid #dbeafe;
+  border-radius: 999px;
+  padding: 5px 9px;
+  font-size: 0.84rem;
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.phase-chip-list-accent span {
+  background: #e0f2fe;
+  border-color: #bae6fd;
+  color: #0c4a6e;
+}
+
+.phase-project-list {
+  display: grid;
+  gap: 7px;
+}
+
+.phase-project-item {
+  border: 1px solid #c7d2fe;
+  background: #eef2ff;
+  color: #3730a3;
+  border-radius: 9px;
+  padding: 7px 9px;
+  font-size: 0.9rem;
+}
+
+.recommended-courses-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}

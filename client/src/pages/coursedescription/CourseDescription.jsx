@@ -7,6 +7,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { UserData } from "../../context/UserContext";
 import Loading from "../../components/loading/Loading";
+import CourseThumbnail from "../../components/coursethumbnail/CourseThumbnail";
 
 const CourseDescription = ({ user }) => {
   const params = useParams();
@@ -20,69 +21,113 @@ const CourseDescription = ({ user }) => {
 
   useEffect(() => {
     fetchCourse(params.id);
-  }, []);
+  }, [params.id]);
 
   const checkoutHandler = async () => {
     const token = localStorage.getItem("token");
+    if (!token) {
+      toast.error("Please login first");
+      return;
+    }
+
+    if (!window.Razorpay) {
+      toast.error("Razorpay SDK failed to load. Refresh and try again.");
+      return;
+    }
+
     setLoading(true);
-
-    const {
-      data: { order },
-    } = await axios.post(
-      `${server}/api/course/checkout/${params.id}`,
-      {},
-      {
-        headers: {
-          token,
-        },
-      }
-    );
-
-    const options = {
-      key: "rzp_test_Z3geR0E1t3lebr", // Enter the Key ID generated from the Dashboard
-      amount: order.id, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-      currency: "INR",
-      name: "Edu-Tech", //your business name
-      description: "Learn with us",
-      order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-
-      handler: async function (response) {
-        const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
-          response;
-
-        try {
-          const { data } = await axios.post(
-            `${server}/api/verification/${params.id}`,
-            {
-              razorpay_order_id,
-              razorpay_payment_id,
-              razorpay_signature,
-            },
-            {
-              headers: {
-                token,
-              },
-            }
-          );
-
-          await fetchUser();
-          await fetchCourses();
-          await fetchMyCourse();
-          toast.success(data.message);
-          setLoading(false);
-          navigate(`/payment-success/${razorpay_payment_id}`);
-        } catch (error) {
-          toast.error(error.response.data.message);
-          setLoading(false);
+    try {
+      const {
+        data: { order, key },
+      } = await axios.post(
+        `${server}/api/course/checkout/${params.id}`,
+        {},
+        {
+          headers: {
+            token,
+          },
         }
-      },
-      theme: {
-        color: "#8a4baf",
-      },
-    };
-    const razorpay = new window.Razorpay(options);
+      );
 
-    razorpay.open();
+      const options = {
+        key,
+        amount: order.amount,
+        currency: order.currency || "INR",
+        name: "Edu-Tech",
+        description: "Learn with us",
+        order_id: order.id,
+        handler: async function (response) {
+          const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+            response;
+
+          try {
+            const { data } = await axios.post(
+              `${server}/api/verification/${params.id}`,
+              {
+                razorpay_order_id,
+                razorpay_payment_id,
+                razorpay_signature,
+              },
+              {
+                headers: {
+                  token,
+                },
+              }
+            );
+
+            await fetchUser();
+            await fetchCourses();
+            await fetchMyCourse();
+            toast.success(data.message);
+            setLoading(false);
+            navigate(`/payment-success/${razorpay_payment_id}`);
+          } catch (error) {
+            toast.error(error.response?.data?.message || "Payment verification failed");
+            setLoading(false);
+          }
+        },
+        theme: {
+          color: "#8a4baf",
+        },
+        prefill: {
+          name: user?.name || "",
+          email: user?.email || "",
+        },
+        modal: {
+          ondismiss: function () {
+            setLoading(false);
+            toast.error("Payment popup closed");
+          },
+        },
+      };
+
+      const razorpay = new window.Razorpay(options);
+      razorpay.on("payment.failed", function (response) {
+        const err = response?.error || {};
+        console.error("Razorpay payment.failed", err);
+        if (err.reason === "international_transaction_not_allowed") {
+          toast.error(
+            "This merchant accepts domestic cards only in current setup. Use UPI (success@razorpay) or an Indian test card."
+          );
+          setLoading(false);
+          return;
+        }
+        const msg = [
+          err.description || "Payment failed",
+          err.reason ? `Reason: ${err.reason}` : "",
+          err.step ? `Step: ${err.step}` : "",
+          err.code ? `Code: ${err.code}` : "",
+        ]
+          .filter(Boolean)
+          .join(" | ");
+        toast.error(msg);
+        setLoading(false);
+      });
+      razorpay.open();
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Unable to initialize payment");
+      setLoading(false);
+    }
   };
 
   return (
@@ -94,11 +139,7 @@ const CourseDescription = ({ user }) => {
           {course && (
             <div className="course-description">
               <div className="course-header">
-                <img
-                  src={`${server}/${course.image}`}
-                  alt=""
-                  className="course-image"
-                />
+                <CourseThumbnail course={course} className="course-image" />
                 <div className="course-info">
                   <h2>{course.title}</h2>
                   <p>Instructor: {course.createdBy}</p>
@@ -110,7 +151,7 @@ const CourseDescription = ({ user }) => {
 
               <p>Let's get started with course At ₹{course.price}</p>
 
-              {user && user.subscription.includes(course._id) ? (
+              {user && user.subscription?.includes(course._id) ? (
                 <button
                   onClick={() => navigate(`/course/study/${course._id}`)}
                   className="common-btn"

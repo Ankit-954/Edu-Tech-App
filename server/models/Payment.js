@@ -8,10 +8,15 @@ const schema = new mongoose.Schema({
   razorpay_payment_id: {
     type: String,
     required: true,
+    unique: true,
   },
   razorpay_signature: {
     type: String,
-    required: true,
+    default: "",
+  },
+  source: {
+    type: String,
+    default: "checkout",
   },
 
   createdAt: {

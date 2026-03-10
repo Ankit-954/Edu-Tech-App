@@ -1,0 +1,234 @@
+.progress-page {
+  min-height: calc(100vh - 140px);
+  padding: clamp(18px, 3.8vw, 38px) 14px;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(16, 185, 129, 0.14), transparent 36%),
+    radial-gradient(circle at 90% 86%, rgba(59, 130, 246, 0.14), transparent 40%),
+    linear-gradient(140deg, #f8fafc 0%, #f7fffb 52%, #eef6ff 100%);
+}
+
+.progress-shell {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+}
+
+.progress-hero {
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 20px;
+  padding: clamp(16px, 3vw, 26px);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.progress-kicker {
+  margin: 0 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.73rem;
+  color: #0f766e;
+  font-weight: 800;
+}
+
+.progress-hero h1 {
+  margin: 0 0 8px;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+}
+
+.progress-hero p {
+  margin: 0;
+  color: #475569;
+}
+
+.progress-metrics {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.metric-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.metric-card p {
+  margin: 0 0 7px;
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.metric-card h3 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1.28rem;
+}
+
+.progress-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 12px;
+}
+
+.progress-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 18px;
+  padding: 14px;
+}
+
+.progress-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.progress-card-head h2 {
+  margin: 0;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.progress-card-head a {
+  text-decoration: none;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #0284c7;
+}
+
+.course-list,
+.test-list {
+  display: grid;
+  gap: 10px;
+}
+
+.course-item,
+.test-item {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 11px;
+  background: #ffffff;
+}
+
+.course-item-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.course-item-head h4,
+.test-item h4 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 0.95rem;
+}
+
+.course-item-head span {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #0f766e;
+  background: #dcfce7;
+  border-radius: 999px;
+  padding: 4px 8px;
+}
+
+.course-track {
+  margin-top: 8px;
+  height: 9px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  overflow: hidden;
+}
+
+.course-track span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(120deg, #10b981 0%, #0ea5e9 100%);
+}
+
+.course-item-meta {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.course-item-meta p,
+.test-item p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.8rem;
+}
+
+.course-link {
+  margin-top: 9px;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #0369a1;
+}
+
+.test-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.test-score {
+  text-align: right;
+}
+
+.test-score strong {
+  display: block;
+  color: #0f172a;
+}
+
+.test-score span {
+  color: #0f766e;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.empty-row,
+.progress-loading,
+.progress-error {
+  margin: 0;
+  color: #475569;
+}
+
+.progress-error {
+  color: #b91c1c;
+  font-weight: 700;
+}
+
+@media (max-width: 960px) {
+  .progress-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .progress-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .progress-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .course-item-head,
+  .course-item-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

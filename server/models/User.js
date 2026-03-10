@@ -11,6 +11,26 @@ const schema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    photo: {
+      type: String,
+      default: "",
+    },
+    phone: {
+      type: String,
+      default: "",
+    },
+    country: {
+      type: String,
+      default: "",
+    },
+    address: {
+      type: String,
+      default: "",
+    },
+    education: {
+      type: String,
+      default: "",
+    },
     password: {
       type: String,
       required: true,
@@ -30,6 +50,15 @@ const schema = new mongoose.Schema(
       },
     ],
     resetPasswordExpire: Date,
+    testHistory: [
+      {
+        domain: { type: String, required: true },
+        score: { type: Number, required: true },
+        totalQuestions: { type: Number, required: true },
+        percentage: { type: Number, required: true },
+        completedAt: { type: Date, default: Date.now },
+      },
+    ],
   },
   {
     timestamps: true,

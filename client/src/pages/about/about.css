@@ -1,22 +1,22 @@
 .about {
-  padding: 80px 0;
+  padding: 48px clamp(12px, 3vw, 24px);
   text-align: center;
   min-height: 55vh;
+}
 
-  .about-content {
-    max-width: 800px;
-    margin: 0 auto;
+.about .about-content {
+  max-width: 860px;
+  margin: 0 auto;
+}
 
-    h2 {
-      font-size: 32px;
-      color: #8a4baf;
-      margin-bottom: 20px;
-    }
+.about .about-content h2 {
+  font-size: clamp(1.8rem, 3.2vw, 2rem);
+  color: #8a4baf;
+  margin-bottom: 16px;
+}
 
-    p {
-      font-size: 16px;
-      color: #333;
-      line-height: 1.6;
-    }
-  }
+.about .about-content p {
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  color: #333;
+  line-height: 1.7;
 }

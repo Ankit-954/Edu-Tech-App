@@ -16,6 +16,17 @@ const categories = [
   "Artificial Intelligence",
 ];
 
+const streams = [
+  "Computer Science",
+  "Commerce",
+  "Arts",
+  "Science",
+  "Management",
+  "Medical",
+];
+
+const levels = ["All Levels", "Beginner", "Intermediate", "Advanced", "Beginner to Advanced"];
+
 const AdminCourses = ({ user }) => {
   const navigate = useNavigate();
 
@@ -24,6 +35,11 @@ const AdminCourses = ({ user }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [stream, setStream] = useState("");
+  const [level, setLevel] = useState("All Levels");
+  const [subjects, setSubjects] = useState("");
+  const [isTopCourse, setIsTopCourse] = useState(false);
+  const [topPriority, setTopPriority] = useState(0);
   const [price, setPrice] = useState("");
   const [createdBy, setCreatedBy] = useState("");
   const [duration, setDuration] = useState("");
@@ -33,6 +49,18 @@ const AdminCourses = ({ user }) => {
 
   const changeImageHandler = (e) => {
     const file = e.target.files[0];
+    if (!file) {
+      setImage("");
+      setImagePrev("");
+      return;
+    }
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select an image file only (jpg/png/webp).");
+      e.target.value = "";
+      setImage("");
+      setImagePrev("");
+      return;
+    }
     const reader = new FileReader();
 
     reader.readAsDataURL(file);
@@ -54,6 +82,11 @@ const AdminCourses = ({ user }) => {
     myForm.append("title", title);
     myForm.append("description", description);
     myForm.append("category", category);
+    myForm.append("stream", stream);
+    myForm.append("level", level);
+    myForm.append("subjects", subjects);
+    myForm.append("isTopCourse", String(isTopCourse));
+    myForm.append("topPriority", String(topPriority || 0));
     myForm.append("price", price);
     myForm.append("createdBy", createdBy);
     myForm.append("duration", duration);
@@ -77,6 +110,11 @@ const AdminCourses = ({ user }) => {
       setCreatedBy("");
       setPrice("");
       setCategory("");
+      setStream("");
+      setLevel("All Levels");
+      setSubjects("");
+      setIsTopCourse(false);
+      setTopPriority(0);
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -85,20 +123,23 @@ const AdminCourses = ({ user }) => {
   return (
     <Layout>
       <div className="admin-courses">
-        <div className="left">
-          <h1>All Courses</h1>
-          <div className="dashboard-content">
+        <div className="left admin-courses-list-panel">
+          <div className="admin-courses-header">
+            <h1>Manage Courses</h1>
+            <p>Create, review, and update your course catalog.</p>
+          </div>
+          <div className="dashboard-content admin-course-grid">
             {courses && courses.length > 0 ? (
               courses.map((e) => {
                 return <CourseCard key={e._id} course={e} />;
               })
             ) : (
-              <p>No Courses Yet</p>
+              <p className="admin-empty-state">No Courses Yet</p>
             )}
           </div>
         </div>
 
-        <div className="right">
+        <div className="right admin-courses-form-panel">
           <div className="add-course">
             <div className="course-form">
               <h2>Add Course</h2>
@@ -138,6 +179,7 @@ const AdminCourses = ({ user }) => {
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
+                  required
                 >
                   <option value={""}>Select Category</option>
                   {categories.map((e) => (
@@ -147,6 +189,53 @@ const AdminCourses = ({ user }) => {
                   ))}
                 </select>
 
+                <select
+                  value={stream}
+                  onChange={(e) => setStream(e.target.value)}
+                  required
+                >
+                  <option value={""}>Select Stream</option>
+                  {streams.map((e) => (
+                    <option value={e} key={e}>
+                      {e}
+                    </option>
+                  ))}
+                </select>
+
+                <select value={level} onChange={(e) => setLevel(e.target.value)} required>
+                  {levels.map((e) => (
+                    <option value={e} key={e}>
+                      {e}
+                    </option>
+                  ))}
+                </select>
+
+                <label htmlFor="text">Subjects (comma separated)</label>
+                <input
+                  type="text"
+                  value={subjects}
+                  onChange={(e) => setSubjects(e.target.value)}
+                  placeholder="e.g. React, Redux, Node.js"
+                  required
+                />
+
+                <label className="admin-top-course-check">
+                  <input
+                    type="checkbox"
+                    checked={isTopCourse}
+                    onChange={(e) => setIsTopCourse(e.target.checked)}
+                  />
+                  Mark as Top Course
+                </label>
+
+                <label htmlFor="text">Top Priority (1 = highest)</label>
+                <input
+                  type="number"
+                  min="0"
+                  value={topPriority}
+                  onChange={(e) => setTopPriority(e.target.value)}
+                />
+
                 <label htmlFor="text">Duration</label>
                 <input
                   type="number"
@@ -155,7 +244,14 @@ const AdminCourses = ({ user }) => {
                   required
                 />
 
-                <input type="file" required onChange={changeImageHandler} />
+                <label htmlFor="course-cover">Course Cover Image (optional)</label>
+                <input
+                  id="course-cover"
+                  type="file"
+                  accept="image/*"
+                  onChange={changeImageHandler}
+                />
+                <small>Allowed: jpg, png, webp. If skipped, default cover is generated.</small>
                 {imagePrev && <img src={imagePrev} alt="" width={300} />}
 
                 <button

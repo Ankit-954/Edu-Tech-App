@@ -1,12 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import "./home.css";
 import Testimonials from "../../components/testimonials/Testimonials";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import ChatbotWidget from "../../components/chatbot/ChatbotWidget";
+import { CourseData } from "../../context/CourseContext";
+import CourseCard from "../../components/coursecard/CourseCard";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 const Home = () => {
   const navigate = useNavigate();
+  const { courses } = CourseData();
+
+  const topCourses = useMemo(() => {
+    const list = Array.isArray(courses) ? courses : [];
+    const selected = list
+      .filter((c) => c.isTopCourse)
+      .sort((a, b) => {
+        if ((a.topPriority || 0) !== (b.topPriority || 0)) {
+          return (a.topPriority || 0) - (b.topPriority || 0);
+        }
+        return String(b.createdAt || "").localeCompare(String(a.createdAt || ""));
+      })
+      .slice(0, 4);
+
+    if (selected.length === 4) return selected;
+
+    const selectedIds = new Set(selected.map((c) => String(c._id)));
+    const fallback = list
+      .filter((c) => !selectedIds.has(String(c._id)))
+      .sort((a, b) => String(b.createdAt || "").localeCompare(String(a.createdAt || "")))
+      .slice(0, 4 - selected.length);
+
+    return [...selected, ...fallback];
+  }, [courses]);
 
   useEffect(() => {
     AOS.init({ duration: 1000 });
@@ -23,7 +51,30 @@ const Home = () => {
           </button>
         </div>
       </div>
+      <section className="home-top-courses">
+        <div className="home-top-courses-head">
+          <h2>Top Courses</h2>
+          <p>Handpicked by admin in priority order.</p>
+        </div>
+        <div className="home-top-courses-grid">
+          {topCourses.length > 0 ? (
+            topCourses.map((course) => <CourseCard key={course._id} course={course} />)
+          ) : (
+            <p>No featured courses available.</p>
+          )}
+        </div>
+        <div className="home-top-courses-footer">
+          <button
+            type="button"
+            className="home-continue-btn"
+            onClick={() => navigate("/courses")}
+          >
+            Continue <FaArrowRightLong />
+          </button>
+        </div>
+      </section>
       <Testimonials />
+      <ChatbotWidget />
     </div>
   );
 };
